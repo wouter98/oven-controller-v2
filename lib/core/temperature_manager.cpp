@@ -1,19 +1,31 @@
 #include "temperature_manager.hpp"
 
-TemperatureManager::TemperatureManager()
-{
-}
-
 void TemperatureManager::addSensor(TemperatureSensor *sensor)
 {
     _sensors.push_back(sensor);
+}
+
+void TemperatureManager::addHeater(Heater *heater)
+{
+    _heaters.push_back(heater);
+}
+
+int TemperatureManager::getSensorCount()
+{
+    return _sensors.size();
+}
+
+int TemperatureManager::getHeaterCount()
+{
+    return _heaters.size();
 }
 
 float TemperatureManager::getAverageTemperature()
 {
     float totalTemperature = 0;
 
-    if (_sensors.empty()) {
+    if (_sensors.empty())
+    {
         return 0.0f;
     }
 
@@ -25,7 +37,12 @@ float TemperatureManager::getAverageTemperature()
     return totalTemperature / _sensors.size();
 }
 
-int TemperatureManager::getSensorCount()
+void TemperatureManager::setTargetTemperature(int degreesCelsius)
 {
-    return _sensors.size();
+    _targetTemperatureCelsius = degreesCelsius;
+}
+
+void TemperatureManager::loop()
+{
+    
 }

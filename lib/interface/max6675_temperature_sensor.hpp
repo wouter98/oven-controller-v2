@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../core/temperature_sensor.hpp"
+#include "temperature_sensor.hpp"
 #include "max6675.h"
 
 class Max6675TemperatureSensor : public TemperatureSensor {

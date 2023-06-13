@@ -1,3 +1,9 @@
+/**
+ * Implementation of the heater using an Solid-State Relay.
+ *
+ * Works by setting the heater pin to HIGH or LOW.
+ */
+
 #pragma once
 
 #include <Arduino.h>

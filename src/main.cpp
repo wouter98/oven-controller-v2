@@ -1,15 +1,16 @@
 #include <Arduino.h>
 
+#include "config.hpp"
 #include "temperature_manager.hpp"
 #include "max6675_temperature_sensor.hpp"
 #include "ssr_heater.hpp"
 
 TemperatureManager manager;
 
-Max6675TemperatureSensor sensor1(12, 9, 11);
-Max6675TemperatureSensor sensor2(12, 10, 11);
+Max6675TemperatureSensor sensor1(CLK_PIN, TEMP_SENSOR_1_PIN, MISO_PIN);
+Max6675TemperatureSensor sensor2(CLK_PIN, TEMP_SENSOR_2_PIN, MISO_PIN);
 
-SSRHeater heater(5);
+SSRHeater heater(HEATER_PIN);
 
 void setup()
 {
@@ -19,6 +20,7 @@ void setup()
 
     manager.addSensor(&sensor1);
     manager.addSensor(&sensor2);
+    manager.addHeater(&heater);
 }
 
 void loop()
@@ -38,11 +40,13 @@ void loop()
     Serial.print("Heater status: ");
     Serial.println(heater.enabled());
 
-    if (manager.getAverageTemperature() > 50.0f) {
+    if (manager.getAverageTemperature() > 50.0f)
+    {
         heater.disable();
     }
 
-    if (manager.getAverageTemperature() < 30.0f) {
+    if (manager.getAverageTemperature() < 30.0f)
+    {
         heater.enable();
     }
 
