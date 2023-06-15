@@ -1,9 +1,9 @@
 #include "timer.hpp"
 
 Timer::Timer(TimeProvider *timeProvider, long intervalMilliseconds, bool repeating)
-    : _timeProvider(timeProvider), _repeating(repeating), _intervalMilliseconds(intervalMilliseconds)
+    : _timeProvider(timeProvider), _repeating(repeating), 
+    _intervalMilliseconds(intervalMilliseconds), _intervalsPassedAtLastTrigger(0)
 {
-    _timeProvider = timeProvider;
     _startTime = _timeProvider->getTimeMillis();
 }
 
