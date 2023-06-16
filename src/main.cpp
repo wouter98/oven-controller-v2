@@ -4,8 +4,14 @@
 #include "temperature_manager.hpp"
 #include "max6675_temperature_sensor.hpp"
 #include "ssr_heater.hpp"
+#include "arduino_time_provider.hpp"
+#include "simple_pid_controller.hpp"
 
-TemperatureManager manager;
+ArduinoTimeProvider timeProvider;
+
+SimplePIDController pidController(PID_KP, PID_KI, PID_KD);
+
+TemperatureManager manager(&timeProvider, &pidController);
 
 Max6675TemperatureSensor sensor1(CLK_PIN, TEMP_SENSOR_1_PIN, MISO_PIN);
 Max6675TemperatureSensor sensor2(CLK_PIN, TEMP_SENSOR_2_PIN, MISO_PIN);
@@ -18,8 +24,8 @@ void setup()
 
     sleep(2);
 
-    manager.addSensor(&sensor1);
-    manager.addSensor(&sensor2);
+    manager.addTemperatureSensor(&sensor1);
+    manager.addTemperatureSensor(&sensor2);
     manager.addHeater(&heater);
 }
 
@@ -40,15 +46,7 @@ void loop()
     Serial.print("Heater status: ");
     Serial.println(heater.enabled());
 
-    if (manager.getAverageTemperature() > 50.0f)
-    {
-        heater.disable();
-    }
-
-    if (manager.getAverageTemperature() < 30.0f)
-    {
-        heater.enable();
-    }
+    manager.updateHeater(60);
 
     sleep(1);
 }
