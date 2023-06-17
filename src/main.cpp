@@ -23,6 +23,9 @@ void setup()
     Serial.begin();
 
     sleep(2);
+    
+    Serial.print("Running on thread: " );
+    Serial.println(xPortGetCoreID());
 
     manager.addTemperatureSensor(&sensor1);
     manager.addTemperatureSensor(&sensor2);
@@ -31,14 +34,6 @@ void setup()
 
 void loop()
 {
-    Serial.print("Sensor 1 Temperature: ");
-    Serial.print(sensor1.getTemperatureCelcius());
-    Serial.println("c");
-
-    Serial.print("Sensor 2 Temperature: ");
-    Serial.print(sensor2.getTemperatureCelcius());
-    Serial.println("c");
-
     Serial.print("Average Temperature: ");
     Serial.print(manager.getAverageTemperature());
     Serial.println("c");
@@ -46,7 +41,7 @@ void loop()
     Serial.print("Heater status: ");
     Serial.println(heater.enabled());
 
-    manager.updateHeater(60);
+    // manager.updateHeater(60);
 
     sleep(1);
 }

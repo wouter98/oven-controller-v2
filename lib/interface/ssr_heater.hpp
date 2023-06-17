@@ -8,15 +8,16 @@
 
 #include <Arduino.h>
 #include "heater.hpp"
+#include "timer.hpp"
 
 class SSRHeater : public Heater
 {
 public:
     SSRHeater(int pin);
-    void enable();
-    void disable();
-    bool enabled();
+    void setPower(float power);
+    float getPower();
 
 private:
     int _pin;
+    float _power;
 };

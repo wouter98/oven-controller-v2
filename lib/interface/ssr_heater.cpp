@@ -5,19 +5,16 @@ SSRHeater::SSRHeater(int pin)
 {
     pinMode(_pin, OUTPUT);
     digitalWrite(_pin, LOW);
+
+    
 }
 
-void SSRHeater::enable()
+void SSRHeater::setPower(float power)
 {
-    digitalWrite(_pin, HIGH);
+    _power = power;
 }
 
-void SSRHeater::disable()
+float SSRHeater::getPower()
 {
-    digitalWrite(_pin, LOW);
-}
-
-bool SSRHeater::enabled()
-{
-    return digitalRead(_pin);
+    return _power;
 }
